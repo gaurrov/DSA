@@ -1,0 +1,16 @@
+class Solution {
+    public static void generate(int n,int op,int cl,String str,List<String> res){
+        if(str.length()==2*n){
+            res.add(str);
+            return;
+        }
+        if(op<n) generate(n,op+1,cl,str+'(',res);
+        if(cl<op) generate(n,op,cl+1,str+')',res);
+        
+    }
+    public List<String> generateParenthesis(int n) {
+        List<String> res=new ArrayList<>();
+        generate(n,0,0,"",res);
+        return res;
+    }
+}
