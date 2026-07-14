@@ -1,0 +1,38 @@
+class Solution {
+    private boolean possible(int[] arr,long dist,int k,int n){
+        int book=1;
+        long currsum=0;
+        for(int i=0;i<n;i++){
+            if(currsum+arr[i]>dist){
+                currsum=arr[i];
+                book+=1;
+                
+            }else{
+                currsum+=arr[i];
+            }
+        }
+        return book<=k;
+    }
+    public int findPages(int[] arr, int k) {
+        // code here
+        int n=arr.length;
+        if(n<k) return -1;
+        long min=0;
+        long max=0;
+        for(int i=0;i<n;i++){
+            min=Math.max(min,arr[i]);
+            max+=arr[i];
+        }
+        long result=-1;
+        while(min<=max){
+            long mid=min+(max-min)/2;
+            if(possible(arr,mid,k,n)){
+                result=mid;
+                max=mid-1;
+            }else{
+                min=mid+1;
+            }
+        }
+        return (int)result;
+    }
+}
