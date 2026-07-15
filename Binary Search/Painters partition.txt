@@ -1,0 +1,34 @@
+class Solution {
+    private int possible(int[] arr,int mid,int k){
+        int res=1,prev=0;
+        for(int x:arr){
+            if(prev+x>mid){
+                res++;
+                prev=x;
+            }else{
+                prev+=x;
+            }
+        }
+        return res;
+    }
+    public int minTime(int[] arr, int k) {
+        // code here
+        int min=0,max=0;
+        for(int x:arr){
+            min=Math.max(min,x);
+            max+=x;
+        }
+        int ans=max;
+        while(min<=max){
+            int mid=min+(max-min)/2;
+            int painters=possible(arr,mid,k);
+            if(painters<=k){
+                ans=mid;
+                max=mid-1;
+            }else{
+                min=mid+1;
+            }
+        }
+        return ans;
+    }
+}
