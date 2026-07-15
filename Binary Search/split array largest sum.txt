@@ -1,0 +1,33 @@
+class Solution {
+    private int possible(int[] nums,int sum,int k){
+        int vals=1;
+        int currsum=0;
+        for(int num:nums){
+            if(currsum+num>sum){
+                vals+=1;
+                currsum=num;
+            }else{
+                currsum+=num;
+            }
+        }
+        return vals;
+    }
+    public int splitArray(int[] nums, int k) {
+        int min=0,max=0;
+        for(int num:nums){
+            min=Math.max(min,num);
+            max+=num;
+        }
+        int result=-1;
+        while(min<=max){
+            int mid=min+(max-min)/2;
+            if(possible(nums,mid,k)<=k){
+                result=mid;
+                max=mid-1;
+            }else{
+                min=mid+1;
+            }
+        }
+        return result;
+    }
+}
