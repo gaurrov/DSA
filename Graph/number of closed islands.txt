@@ -1,0 +1,28 @@
+class Solution {
+    int[] dir=new int[]{-1,0,1,0,-1};
+    private boolean dfs(int[][] grid,boolean[][]vis,int r,int c,int R,int C){
+        if(r==0 || c==0 || r==R-1 || c==C-1) return false;
+        vis[r][c]=true;
+        boolean closed=true;
+        for(int i=0;i<4;i++){
+            int nr=r+dir[i],nc=c+dir[i+1];
+            if(nr>=0 && nr<R && nc>=0 && nc<C && grid[nr][nc]==0 && !vis[nr][nc]){
+                if(!dfs(grid,vis,nr,nc,R,C)) closed=false;
+            }
+        }
+        return closed;
+    }
+    public int closedIsland(int[][] grid) {
+        int R=grid.length,C=grid[0].length;
+        int res=0;
+        boolean[][] vis=new boolean[R][C];
+        for(int r=1;r<R-1;r++){
+            for(int c=1;c<C-1;c++){
+               if(grid[r][c]==0 && !vis[r][c] && dfs(grid,vis,r,c,R,C)){
+                res+=1;
+               }
+            }
+        }
+        return res;
+    }
+}
